@@ -1,20 +1,18 @@
-# Use an official Node.js runtime as the base image
-FROM node:18
+FROM node:19.7.0-alpine
 
-# Set the working directory inside the container
-WORKDIR /app
+ENV NODE_ENV=production
 
-# Copy package.json and package-lock.json (if applicable)
-COPY package*.json ./
+RUN mkdir /labone && chown node:node /labone
 
-# Install dependencies
+WORKDIR /labone
+
+USER node
+
+COPY --chown=node:node . .
+
 RUN npm install
 
-# Copy the rest of the application files
-COPY . .
+EXPOSE 3000
 
-# Expose the port the app runs on (modify if needed)
-EXPOSE 8080
+CMD ["node", "src/index.js"]
 
-# Start the application
-CMD ["npm", "start"]
