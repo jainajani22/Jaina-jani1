@@ -1,4 +1,14 @@
-steps:#
-Use the Docker Cloud Builder Dockerfile: 'gcr.io/cloud-builders/docker'args: ['build', '-t', 'REGION-docker.pkg.dev/focal-dolphin-447218-v5/jaina-100996578/Dockerfile:$COMMIT_SHA', '.']   
-# Push the image to Artifact Registry- jaina-100996578: 'gcr.io/cloud-builders/docker'args: ['push', 'REGION-docker.pkg.dev/focal-dolphin-447218-v5/jaina-100996578/Dockerfile:$COMMIT_SHA'] 
-# Specify logging settingslogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET# Substitutionssubstitutions:_REGION: 'northamerica-northeast2 (Toronto)'_PROJECT_ID: 'focal-dolphin-447218-v5'
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build', 
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/jaina-100996578/my-app:$SHORT_SHA', 
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push', 
+      'us-central1-docker.pkg.dev/$PROJECT_ID/jaina-100996578/my-app:$SHORT_SHA'
+    ]
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
