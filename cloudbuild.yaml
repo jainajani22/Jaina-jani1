@@ -10,5 +10,15 @@ steps:
       'push', 
       'us-central1-docker.pkg.dev/$PROJECT_ID/jaina-100996578/my-app:$SHORT_SHA'
     ]
+
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: [
+      'gcloud', 'run', 'deploy', 'dc-jaina-100996578',
+      '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/jaina-100996578/my-app:$SHORT_SHA',
+      '--region', 'us-central1',
+      '--platform', 'managed',
+      '--port', '3000',
+      '--allow-unauthenticated'
+    ]
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
